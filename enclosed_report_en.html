@@ -56,7 +56,7 @@ img { max-width: 100%; }
 </div>
 
 <h2>Summary</h2>
-<p>Judging every payment of the enclosed period against the victim conditions confirmed 2,153 suspect addresses, and expanding them with findsp2.py gave 31,858. The expansion covers 99.0% of Project No.1's list, and some 466 million Pi flowed out of the list after the period ended.</p>
+<p>Judging every payment of the enclosed period against the victim conditions confirmed 2,153 suspect addresses, and expanding them the same way as in Project No.1 gave 31,858. The expansion covers 99.0% of Project No.1's list, and some 466 million Pi flowed out of the list after the period ended.</p>
 <ul>
 <li>Judging every enclosed-period payment against the victim conditions confirmed <b>2,153</b> suspect addresses.</li>
 <li>Inside the list, 2,052 addresses connect into one group and 1,432 form the mutually-paying core. Intra-list payments: 833,491 operations, about 497,828,975 Pi.</li>
@@ -124,25 +124,25 @@ img { max-width: 100%; }
 <p>The flow from the list into <span class="pcmaddr">pi chain mall</span> is one-way. Note that <span class="pcmaddr">pi chain mall</span> sells goods for Pi and receives many payments from buyers, so part of this flow may be ordinary purchase payments.</p>
 
 <h2>Result 4: The same expansion as Project No.1</h2>
-<p>Project No.1 expanded its 278 confirmed seeds by collecting recipients of single payments over 999 Pi, twice, reaching 8,132 addresses (findsp2.py). Applying the same expansion to this project's 2,153 seeds:</p>
+<p>Project No.1 expanded from its 278 confirmed addresses by collecting recipients of single payments over 999 Pi, twice, reaching 8,132 addresses (using the program findsp2.py). Applying the same expansion to this project's 2,153 confirmed addresses:</p>
 <div class="tw"><table>
 <tr><th></th><th>Project No.1</th><th>Project No.2 (this report)</th></tr>
-<tr><td>Seeds (confirmed by the victim conditions)</td><td class="num">278</td><td class="num">2,153</td></tr>
+<tr><td>Starting point (confirmed by the victim conditions)</td><td class="num">278</td><td class="num">2,153</td></tr>
 <tr><td>Expanded total</td><td class="num">8,132</td><td class="num">31,858 (ring 1 +10,984, ring 2 +18,721)</td></tr>
 <tr><td>Largest group</td><td class="num">8,126</td><td class="num">31,854</td></tr>
 <tr><td>Largest strongly connected component</td><td class="num">6,365</td><td class="num">24,060</td></tr>
 <tr><td>Receive-only</td><td class="num">1,503</td><td class="num">6,214</td></tr>
-<tr><td>Send-only</td><td class="num">41</td><td class="num">392 (all seeds)</td></tr>
+<tr><td>Send-only</td><td class="num">41</td><td class="num">392 (all from the starting point)</td></tr>
 </table></div>
-<p>The 31,858 expanded addresses include 8,048 (99.0%) of Project No.1's 8,132; the remaining 84 were not reached by this expansion. Payments inside the expanded set total 2,678,197 operations and about 2,395,060,983 Pi, with almost all addresses connected into one group. <span class="pcmaddr">pi chain mall</span> appears in ring 1 and belongs to both the largest group and the core; <span class="teladdr">teltlk</span> is one of the seeds.</p>
-<p>The evidence for an expanded address is weaker than for a seed: it received a large one-shot payment from a seed or from the expansion, and was not individually confirmed by the victim conditions. Even so, covering 99.0% of the No.1 list and connecting almost entirely into one group describes the character of this expansion as a whole.</p>
+<p>The 31,858 expanded addresses include 8,048 (99.0%) of Project No.1's 8,132; the remaining 84 were not reached by this expansion. Payments inside the expanded set total 2,678,197 operations and about 2,395,060,983 Pi, with almost all addresses connected into one group. <span class="pcmaddr">pi chain mall</span> appears in ring 1 and belongs to both the largest group and the core; <span class="teladdr">teltlk</span> is one of the starting points.</p>
+<p>The evidence for an expanded address is weaker than for a starting point: it received a large one-shot payment from a starting point or from within the expansion, and was not individually confirmed by the victim conditions. Even so, covering 99.0% of the No.1 list and connecting almost entirely into one group describes the character of this expansion as a whole.</p>
 
 <h2>Limitations</h2>
 <ul>
 <li>The scope is the enclosed period only. Thefts that happened just after the period ended on 20 February 2025, even days later, are structurally outside this judgment.</li>
 <li>Confirmation is a lower bound; not matching the conditions is not proof of innocence. Of 2,524,130 candidate payments, 12 (from 2 victims) could not be retrieved and were never judged.</li>
 <li>Outflows in Result 2 can include ordinary sales. Exchange labels rest on third-party reports.</li>
-<li>The expansion in Result 4 rests on weaker evidence than the seeds (see Result 4).</li>
+<li>The expansion in Result 4 rests on weaker evidence than the starting point (see Result 4).</li>
 </ul>
 
 <h2 id="appendix-method">Appendix: Method</h2>
@@ -150,7 +150,7 @@ img { max-width: 100%; }
 
 
 <h3>How much of the Project No.1 list was confirmed, by layer</h3>
-<p>Of Project No.1's 8,132 addresses, the share confirmed by this judgment was 7.1% overall: 65.8% for the seeds (278), 42.3% for expansion ring 1, and 2.9% for ring 2. Not being confirmed does not mean innocent: addresses that never entered the judgment were never judged.</p>
+<p>Of Project No.1's 8,132 addresses, the share confirmed by this judgment was 7.1% overall: 65.8% for the 278 first confirmed, 42.3% for expansion ring 1, and 2.9% for ring 2. Not being confirmed does not mean innocent: addresses that never entered the judgment were never judged.</p>
 
 <h2>Files</h2>
 <ul>
