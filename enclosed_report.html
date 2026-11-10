@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>エンクローズド期間の疑惑アドレス解析（プロジェクトNo.2）</title>
+
+<style>
+:root { color-scheme: light dark; }
+body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; margin: 0; background: #f6f7f9; color: #1a1d21; line-height: 1.7; overflow-x: hidden; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 18px 64px; background: #fff; }
+h1 { font-size: 1.5rem; line-height: 1.4; }
+h2 { margin-top: 2.2em; border-bottom: 2px solid #e3e6ea; padding-bottom: .3em; font-size: 1.2rem; }
+h3 { margin-top: 1.6em; font-size: 1.05rem; }
+.tw { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; min-width: 460px; margin: 1em 0; font-size: .86rem; }
+@media (max-width: 600px) { th, td { padding: 5px 5px; } table { font-size: .8rem; } }
+th, td { border: 1px solid #d8dce1; padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: #f0f2f5; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td .addr, th .addr { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .78rem; word-break: break-all; display: block; width: 12ch; }
+.addrf { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .78rem; overflow-wrap: anywhere; }
+.pcmaddr { font-style: italic; font-weight: 700; color: #6a1b9a; }
+.teladdr { font-style: italic; font-weight: 700; color: #1b5e20; }
+.meta { background: #f0f2f5; border-radius: 8px; padding: 14px 18px; font-size: .92rem; }
+.meta p { margin: .3em 0; }
+.note { background: #fff8e6; border: 1px solid #f0d98c; border-radius: 8px; padding: 10px 16px; font-size: .9rem; }
+a { color: #0b5cad; overflow-wrap: anywhere; }
+code { overflow-wrap: anywhere; }
+img { max-width: 100%; }
+.small { font-size: .85rem; color: #555; overflow-wrap: anywhere; }
+@media (prefers-color-scheme: dark) {
+  body { background: #121212; color: #e8e8e8; }
+  main { background: #1a1a1a; }
+  h2 { border-bottom-color: #3a3a3a; }
+  th, td { border-color: #3d3d3d; }
+  th { background: #262626; }
+  .meta { background: #242424; }
+  .note { background: #2b2410; border-color: #8a7420; }
+  a { color: #7cc4ff; }
+  .small { color: #a8a8a8; }
+  .pcmaddr { color: #ce93d8; }
+  .teladdr { color: #66bb6a; }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="small"><a href="https://tysseo7-meru.github.io/moco-project-index/">レポート一覧へ</a> ／ <a href="enclosed_report_en.html">English version</a></p>
+<h1>エンクローズド期間の疑惑アドレス解析</h1>
+<p>エンクローズド期間の全送金を被害者の条件で判定し、疑惑アドレス2,153件を確定した。その大半は1つのグループにつながり、期間後は約4億6,600万Piが外へ出た。2大ハブへの一方的な流入も確認した。</p>
+<div class="meta">
+<p><b>対象</b>： Piメインネットのエンクローズド期間（オープンネットワーク開始前、2025年2月20日まで）の全送金 11,413,664 件</p>
+<p><b>確定リスト</b>： 2,153件（<a href="enclosed_suspects_2153.txt">アドレス一覧</a>）</p>
+<p><b>広げたリスト</b>： 31,858件（<a href="expansion_31858.txt">アドレス一覧</a>）</p>
+<p><b>位置づけ</b>： プロジェクト1（疑惑アドレス8,132件の追跡）の続編です。プロジェクト1が2023年10月〜2024年2月の一部の期間で作られたのに対し、本プロジェクトはエンクローズド期間の全部を対象に、同じ考え方で判定し直しました。本ページは、期間を2025年末まで広げる作業の前に、現時点の結果をまとめたものです。</p>
+</div>
+
+<h2>要約</h2>
+<ul>
+<li>エンクローズド期間の全送金を対象に被害者の条件で判定し、疑惑アドレス <b>2,153件</b> を確定した。</li>
+<li>確定リストの内側では、2,052件が1つのグループにつながり、互いに送金し合う中心グループは1,432件だった。リスト内送金は 833,491 回、約497,828,975 Pi。</li>
+<li>エンクローズド期間の終了（2025年2月20日）以降、リストの外へ約466,001,378 Piが流出した。流出させたのはリストの68.5%にあたる 1,475 件で、行き先の上位は取引所とされるウォレットだった。</li>
+<li>2つの大きな集約先ハブのうち、<span class="teladdr">teltlk</span> は確定リストに入った。<span class="pcmaddr">pi chain mall</span> は入らなかったが、リストからは一方的に送金が集まっていた（逆向きはゼロ）。</li>
+<li>確定リストを種にしてプロジェクト1と同じ広げ方をすると <b>31,858件</b> になり、プロジェクト1の8,132件の99.0%を含んだ。その大半（31,854件）が1つのグループにつながった。</li>
+</ul>
+
+<h2>対象リストについて</h2>
+<p>判定の入口は、「1回で1,000 Pi以上を送ったアドレス」への送金です。そのようなアドレスはエンクローズド期間に 107,705 件ありました。それらへの送金の送り手 1,306,960 人について、次の3つの条件をすべて満たす送金があるかを調べました。</p>
+<ul>
+<li>その送金の時点で、送り手にそれより前の入金（送金を受け取った記録）がなかったこと</li>
+<li>その送金が、ロックアップ（一定期間動かせないようにしたPi）の解除から3分以内だったこと</li>
+<li>その送金の後、送り手の残高が2 Pi未満だったこと</li>
+</ul>
+<p>3つの条件をすべて満たす送金は 65,355 件ありました。確定したのは、その送金の送り手ではなく <b>受け取り手</b> で、2,153 件でした。これが本レポートの対象リストです。</p>
+<p>この判定は、パスフレーズをだまし取られた被害者が、ロックアップの解除直後にほぼ全額を送ってしまう、という盗難の型を捉えるためのものです。条件に合わなかったアドレスが無実だという意味ではありません。判定の詳しい手順と、条件の測り方を途中で直した経緯は<a href="#appendix-method">付録</a>にまとめました。</p>
+
+<h2>結果1：確定リスト同士のつながり</h2>
+<p>確定リスト2,153件の内側だけで送金をたどった結果です。</p>
+<div class="tw"><table>
+<tr><th>項目</th><th>件数</th><th>（参考）最初の判定 1,980件のとき</th></tr>
+<tr><td>リスト内の送金</td><td class="num">833,491 回 ／ 497,828,975 Pi</td><td class="num">759,723 回 ／ 454,951,489 Pi</td></tr>
+<tr><td>最大のグループ（送金の有無でたどる）</td><td class="num">2,052 件</td><td class="num">1,878 件</td></tr>
+<tr><td>その他の小グループ</td><td class="num">3件・2件・2件</td><td class="num">3件・2件・2件</td></tr>
+<tr><td>孤立（リスト内に相手がいない）</td><td class="num">94 件</td><td class="num">95 件</td></tr>
+<tr><td>最大の強連結成分（互いに行き来できる中心）</td><td class="num">1,432 件</td><td class="num">1,302 件</td></tr>
+<tr><td>送るだけ（リスト内では受け取らない）</td><td class="num">470 件</td><td class="num">429 件</td></tr>
+<tr><td>受け取るだけ（リスト内では送らない）</td><td class="num">25 件</td><td class="num">27 件</td></tr>
+</table></div>
+<p>リストの96%近くが1つのグループにつながり、その中心では1,432件が互いに送金し合う関係にありました。入口として働く「送るだけ」は470件と少なく、受け取るだけは25件でした。</p>
+
+<h2>結果2：リストの外への流出</h2>
+<p>エンクローズド期間の終了（2025年2月20日）以降に、確定リストからリストの外へ出た送金を数えました。流出させたアドレスは 1,475 件（リストの68.5%）、送金は 1,214,215 回、合計 466,001,378 Pi、宛先は 109,959 件でした。</p>
+<div class="tw"><table>
+<tr><th>送り元</th><th>流出 Pi</th><th>回数</th><th>宛先の数</th></tr>
+<tr><td><span class="addr">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span></td><td class="num">238,058,299</td><td class="num">2,883</td><td class="num">1,015</td></tr>
+<tr><td><span class="addr">GBC6NRTTQLRCABQHIR5J4R4YDJWFWRAO4ZRQIM2SVI5GSIZ2HZ42RINW</span></td><td class="num">106,441,657</td><td class="num">47,602</td><td class="num">6,797</td></tr>
+<tr><td><span class="addr">GDIRB4VB4PRARM27S6W3J5MCJGDUPRHCUQVBQZ4NADRGAQEUZNMRZNFL</span></td><td class="num">58,116,796</td><td class="num">11,242</td><td class="num">4,887</td></tr>
+<tr><td><span class="addr teladdr">GBU7PR3VSIWZGQZYOHP6KEUEBJPX4HYN6FMHDB5VQNJ2NNVCWU4D5ANE</span>（<span class="teladdr">teltlk</span>）</td><td class="num">17,600,000</td><td class="num">210</td><td class="num">1</td></tr>
+<tr><td><span class="addr">GDXZUYU7KF5QATLXEBIRZJ4NWKNYP3OFRNQVL2AUSQ2EUDD2XJA54JTQ</span></td><td class="num">2,626,928</td><td class="num">381</td><td class="num">41</td></tr>
+<tr><td><span class="addr">GCK6YAU4ZQQZ4VPROWH6RZN2ZBSRUBWX3DN2RPGWH7ETVOOYAFHATQJV</span></td><td class="num">2,183,861</td><td class="num">241</td><td class="num">3</td></tr>
+<tr><td><span class="addr">GDTV75TWI3OOZDPJKSRCWLGFIKIXVUAXWXAW4CZ4OHHROO5IHIITWZMV</span></td><td class="num">1,574,433</td><td class="num">551</td><td class="num">6</td></tr>
+<tr><td><span class="addr">GCXUXZSFDV3MMLASJZ2W4SBD7ZQ6DRO5JCV3TXAHE3DDVVD7QHRRMFC5</span></td><td class="num">1,553,707</td><td class="num">2,471</td><td class="num">387</td></tr>
+<tr><td><span class="addr">GBFMTJFT3QP2JUYRXVJUPTBC7J5FRQ7DGV47MICYOH2KKXCT3X4PU2J3</span></td><td class="num">1,544,847</td><td class="num">1,296</td><td class="num">363</td></tr>
+<tr><td><span class="addr">GC3ZUA5QA6E4GWF5SMK2IWRDTWPFAO3QFXUWT3MH6PQAN3PUJW22UHSA</span></td><td class="num">1,525,779</td><td class="num">2,051</td><td class="num">573</td></tr>
+</table></div>
+<p>上位3件の送り元だけで全体の 86.4% を占めます。最大の送り元 <span class="addrf">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span> は、第三者の報道などで取引所OKXのウォレットとされています。同様に2位はGate、4位の <span class="teladdr">teltlk</span> は 17,600,000 Pi を210回に分け、宛先 <span class="addrf">GCQH27CCPDZQH2ACMTNAKXHT5S65VDGMRGZBHDNIHINP4EIKXKCRYSFK</span> ただ1件へ送り続けました。これらの流出には通常の売却も含まれうるため、合計をそのまま不正な資金と読むことはできません。</p>
+<p class="small">注： 流出の集計は、1,980件分の記録（2026年11月6日取得）に、新しく増えた173件分（2026年11月11日取得）を加えたものです。173件分だけ、取得日までの数日間の送金が余分に含まれます。</p>
+
+<h2>結果3：2つのハブとの流れ</h2>
+<p>資金の集約先として知られる2つの大きなアドレスとの間で、確定リストとどのような送金があったかを数えました。</p>
+<h3><span class="teladdr">teltlk</span> <span class="addrf teladdr">GBU7PR3VSIWZGQZYOHP6KEUEBJPX4HYN6FMHDB5VQNJ2NNVCWU4D5ANE</span></h3>
+<p><span class="teladdr">teltlk</span> 自身が確定リストに入っています。リスト内では最大のグループと中心グループの両方に属し、ほぼ受け取り専用でした。</p>
+<div class="tw"><table>
+<tr><th>方向</th><th>回数</th><th>Pi</th><th>相手の数</th></tr>
+<tr><td>リスト → <span class="teladdr">teltlk</span></td><td class="num">6,667</td><td class="num">8,147,461</td><td class="num">44 件から</td></tr>
+<tr><td><span class="teladdr">teltlk</span> → リスト</td><td class="num">127</td><td class="num">4,363</td><td class="num">31 件へ</td></tr>
+</table></div>
+<p>エンクローズド期間の後、<span class="teladdr">teltlk</span> は 17,600,000 Pi を宛先 <span class="addrf">GCQH27CCPDZQH2ACMTNAKXHT5S65VDGMRGZBHDNIHINP4EIKXKCRYSFK</span> 1件だけへ送り続けました（結果2）。</p>
+<h3><span class="pcmaddr">pi chain mall</span> <span class="addrf pcmaddr">GDGVILYX4RATPIO6XTBXNIBEUZXI3EBI36NJXKGO4DVJINYJ5X42WXHF</span></h3>
+<p><span class="pcmaddr">pi chain mall</span> は確定リストに入りませんでした。その送金は判定の対象になりましたが（候補の送金9,771件）、ロックアップ解除後3分以内という条件を満たしたのは2件だけで、その2件も残高の条件を満たしませんでした。</p>
+<div class="tw"><table>
+<tr><th>方向</th><th>回数</th><th>Pi</th><th>相手の数</th></tr>
+<tr><td>リスト → <span class="pcmaddr">pi chain mall</span></td><td class="num">1,738</td><td class="num">973,834</td><td class="num">125 件から</td></tr>
+<tr><td><span class="pcmaddr">pi chain mall</span> → リスト</td><td class="num">0</td><td class="num">0</td><td class="num">0 件</td></tr>
+</table></div>
+<p>リストから <span class="pcmaddr">pi chain mall</span> への流れは一方通行でした。なお <span class="pcmaddr">pi chain mall</span> は商品をPiで販売しており、買い手からの送金が多数あるため、この流れの一部は通常の購入の支払いである可能性があります。</p>
+
+<h2>結果4：プロジェクト1と同じ広げ方をした結果</h2>
+<p>プロジェクト1では、確定した種278件から、1回で999 Piを超える送金を受け取った相手を集めることを2回繰り返し、8,132件に広げました（findsp2.py）。本プロジェクトでも、確定リスト2,153件を種に同じ広げ方をしました。</p>
+<div class="tw"><table>
+<tr><th></th><th>プロジェクト1</th><th>プロジェクト2（本レポート）</th></tr>
+<tr><td>種（被害者の条件で確定）</td><td class="num">278 件</td><td class="num">2,153 件</td></tr>
+<tr><td>広げた合計</td><td class="num">8,132 件</td><td class="num">31,858 件（1段目 +10,984、2段目 +18,721）</td></tr>
+<tr><td>最大のグループ</td><td class="num">8,126 件</td><td class="num">31,854 件</td></tr>
+<tr><td>最大の強連結成分</td><td class="num">6,365 件</td><td class="num">24,060 件</td></tr>
+<tr><td>受け取るだけ</td><td class="num">1,503 件</td><td class="num">6,214 件</td></tr>
+<tr><td>送るだけ</td><td class="num">41 件</td><td class="num">392 件（すべて種）</td></tr>
+</table></div>
+<p>広げた31,858件は、プロジェクト1の8,132件のうち8,048件（99.0%）を含みました。残りの84件には、この広げ方では届きませんでした。広げた先の内側の送金は 2,678,197 回、約2,395,060,983 Pi で、ほぼ全件が1つのグループにつながりました。<span class="pcmaddr">pi chain mall</span> は広がりの1段目に現れ、最大のグループと中心グループの両方に属しました。<span class="teladdr">teltlk</span> は種の1つです。</p>
+<p>広げた先のアドレスの根拠は「種または広がりの途中から、大きな一括送金を受けた」ことであり、種のように被害者の条件で1件ずつ確認したものではありません。それでも、プロジェクト1のリストの99.0%を含むことと、全体がほぼ1つのグループにつながることは、この広がり全体の性格を示しています。</p>
+
+<h2>限界と注意</h2>
+<ul>
+<li>対象はエンクローズド期間だけです。期間の終了（2025年2月20日）の直後に起きた盗難は、それが数日のずれであっても、この判定には含まれません。</li>
+<li>確定は下限です。条件に合わなかったアドレスが無実という意味ではありません。候補送金 2,524,130 件のうち12件（被害者2人分）は記録を取得できず、判定できませんでした。</li>
+<li>結果2の流出には通常の売却も含まれます。宛先の取引所などの名札は、第三者の報道などによるものです。</li>
+<li>結果4の広がりの根拠は、種の確定とは強さが違います（結果4の本文参照）。</li>
+</ul>
+
+<h2 id="appendix-method">付録：方法</h2>
+<h3>データ</h3>
+<p>Piメインネットの公開記録（Horizon API）から、エンクローズド期間の全送金 11,413,664 件と、各アカウントのロックアップ解除の時刻と残高の推移を集めて判定しました。解除の時刻は、受け取り予約（claimable balance）の記録から復元しています。</p>
+<h3>判定の流れ</h3>
+<p>入口は「1回で1,000 Pi以上を送ったアドレス」で、107,705 件ありました。最初の判定では、条件の1つ目を「期間全体を通して入金がなかったこと」として数え、確定は1,980件でした。その後、測り方を2点直して再実行しました。1つ目は「送金の時点で、それより前に入金がなかったこと」に、2つ目は解除の数え方で、2種類の解除（自分で選んだロックアップ期間の解除と、移行に伴う2週間の保留の解除）のどちらから3分以内でもよいことにしました。再実行の結果が2,153件（+173件、脱落なし）で、これを正式なリストとしました。再実行では被害者候補 1,306,960 人、候補送金 2,524,130 件のうち 2,524,118 件を判定しました。</p>
+<h3>集計の方法</h3>
+<p>結果1と結果4のつながりは、対象リストの内側の送金だけを数えています（同じ相手への送金はまとめて1組と数えます）。結果2の流出は、2025年2月20日以降の送金をアカウントごとに公開記録からたどり、リストの外への送金だけを集めました。結果3のハブとの流れは、エンクローズド期間の全送金から数えています。</p>
+
+<h2>付録：緩和テストの記録</h2>
+<h3>テスト1：小さな入金を無かったことにする</h3>
+<p>実際の被害者への聞き取りで、1 Piの入金があったために条件の1つ目で外れた事例がありました。そこで「1回10 Pi以下の入金は無かったことにする」と条件を緩めて判定し直しました。入口は大きく広がりました（被害者候補 +140,887人、候補送金 +395,173件）が、確定は +74件（2,227件）にとどまりました。判定できたのは候補送金の96.5%で、2,227件は下限ですが、それでも増え方は小さく、正式なリストには採用しませんでした。実際に効いている条件は、入金の有無ではなく、解除後3分以内という時間の条件でした。</p>
+<h3>テスト2：解除後の時間を3日に広げる</h3>
+<p>「解除から3分以内」を「3日以内」に広げると、確定は 11,517 件に増えました。増えた分の内訳は、3分〜1時間で2,919件、1時間〜1日で4,734件、1日〜3日で1,711件で、解除直後のわずかな遅れではなく、通常の支出まで拾う形でした。このテストは、3分という条件の効き方を測るためのもので、リストには採用していません。</p>
+
+
+<h3>プロジェクト1のリストは、層ごとにどれだけ確認されたか</h3>
+<p>プロジェクト1のリスト8,132件のうち、本プロジェクトの判定で確定したものの割合を、リストの作られ方（種と、そこから広がった段）ごとに分けたものです。種に近いほど割合が高く、広がりの外側ほど低くなります。この割合は「確認できた割合」であって、確認されなかったものが無実という意味ではありません（判定の入口に入らなかったものは、そもそも判定されていません）。</p>
+<div class="tw"><table>
+<tr><th>層</th><th>件数</th><th>確定した件数</th><th>割合</th></tr>
+<tr><td>プロジェクト1のリスト全体</td><td class="num">8,132</td><td class="num">580</td><td class="num">7.1%</td></tr>
+<tr><td>種（278件）</td><td class="num">278</td><td class="num">183</td><td class="num">65.8%</td></tr>
+<tr><td>広がりの1段目</td><td class="num">433</td><td class="num">183</td><td class="num">42.3%</td></tr>
+<tr><td>広がりの2段目</td><td class="num">7,421</td><td class="num">214</td><td class="num">2.9%</td></tr>
+</table></div>
+<p class="small">段の分け方は、本プロジェクトのデータで同じ広げ方を再現したものによります。プロジェクト1当時の段ごとの境界は、ファイルとして残っていません。</p>
+
+<h2>関連ファイル</h2>
+<ul>
+<li><a href="enclosed_suspects_2153.txt">確定リスト（2,153件）</a></li>
+<li><a href="expansion_31858.txt">広げたリスト（31,858件）</a></li>
+<li><a href="https://tysseo7-meru.github.io/moco_pi-thief-trace-report/pi_thief_trace_report.html">プロジェクト1のレポート</a></li>
+<li><a href="https://tysseo7-meru.github.io/moco-project-index/">レポート一覧</a></li>
+</ul>
+<p class="small">作成： 2026年11月11日。期間を2025年末まで広げた判定は作業中であり、結果が出れば続報を出します。</p>
+</main>
+</body>
+</html>

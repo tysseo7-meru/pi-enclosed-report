@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enclosed-Period Suspect Address Analysis (Project No.2)</title>
+
+<style>
+:root { color-scheme: light dark; }
+body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; margin: 0; background: #f6f7f9; color: #1a1d21; line-height: 1.7; overflow-x: hidden; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 18px 64px; background: #fff; }
+h1 { font-size: 1.5rem; line-height: 1.4; }
+h2 { margin-top: 2.2em; border-bottom: 2px solid #e3e6ea; padding-bottom: .3em; font-size: 1.2rem; }
+h3 { margin-top: 1.6em; font-size: 1.05rem; }
+.tw { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; min-width: 460px; margin: 1em 0; font-size: .86rem; }
+@media (max-width: 600px) { th, td { padding: 5px 5px; } table { font-size: .8rem; } }
+th, td { border: 1px solid #d8dce1; padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: #f0f2f5; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td .addr, th .addr { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .78rem; word-break: break-all; display: block; width: 12ch; }
+.addrf { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .78rem; overflow-wrap: anywhere; }
+.pcmaddr { font-style: italic; font-weight: 700; color: #6a1b9a; }
+.teladdr { font-style: italic; font-weight: 700; color: #1b5e20; }
+.meta { background: #f0f2f5; border-radius: 8px; padding: 14px 18px; font-size: .92rem; }
+.meta p { margin: .3em 0; }
+.note { background: #fff8e6; border: 1px solid #f0d98c; border-radius: 8px; padding: 10px 16px; font-size: .9rem; }
+a { color: #0b5cad; overflow-wrap: anywhere; }
+code { overflow-wrap: anywhere; }
+img { max-width: 100%; }
+.small { font-size: .85rem; color: #555; overflow-wrap: anywhere; }
+@media (prefers-color-scheme: dark) {
+  body { background: #121212; color: #e8e8e8; }
+  main { background: #1a1a1a; }
+  h2 { border-bottom-color: #3a3a3a; }
+  th, td { border-color: #3d3d3d; }
+  th { background: #262626; }
+  .meta { background: #242424; }
+  .note { background: #2b2410; border-color: #8a7420; }
+  a { color: #7cc4ff; }
+  .small { color: #a8a8a8; }
+  .pcmaddr { color: #ce93d8; }
+  .teladdr { color: #66bb6a; }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="small"><a href="https://tysseo7-meru.github.io/moco-project-index/">All reports</a> / <a href="enclosed_report.html">Japanese version</a></p>
+<h1>Enclosed-Period Suspect Address Analysis</h1>
+<p>Judging every payment of the enclosed period against the victim conditions confirmed 2,153 suspect addresses. Most of them connect into a single group, some 466 million Pi flowed out of the list after the period ended, and one-way inflows into the two large hubs were confirmed.</p>
+<div class="meta">
+<p><b>Scope</b>: all 11,413,664 payments of the Pi mainnet enclosed period (before the Open Network, up to 20 February 2025)</p>
+<p><b>Confirmed list</b>: 2,153 addresses (<a href="enclosed_suspects_2153.txt">address list</a>)</p>
+<p><b>Expanded list</b>: 31,858 addresses (<a href="expansion_31858.txt">address list</a>)</p>
+<p><b>Position</b>: a sequel to Project No.1 (tracing 8,132 suspect addresses). No.1 was built from a limited window (October 2023 to February 2024); this project re-judged the whole enclosed period with the same approach. This page freezes the results before the period is extended to the end of 2025.</p>
+</div>
+
+<h2>Summary</h2>
+<ul>
+<li>Judging every enclosed-period payment against the victim conditions confirmed <b>2,153</b> suspect addresses.</li>
+<li>Inside the list, 2,052 addresses connect into one group and 1,432 form the mutually-paying core. Intra-list payments: 833,491 operations, about 497,828,975 Pi.</li>
+<li>After the enclosed period ended (20 February 2025), about 466,001,378 Pi flowed out of the list, from 1,475 addresses (68.5% of the list), mostly toward wallets reported to belong to exchanges.</li>
+<li>Of the two large hubs, <span class="teladdr">teltlk</span> is on the confirmed list. <span class="pcmaddr">pi chain mall</span> is not, but payments from the list flowed into it one-way (zero in reverse).</li>
+<li>Expanding the confirmed list with the same method as Project No.1 gives <b>31,858</b> addresses, covering 99.0% of No.1's 8,132; 31,854 of them connect into a single group.</li>
+</ul>
+
+<h2>About the list</h2>
+<p>The entry point is payments made to addresses that once sent 1,000 Pi or more in a single payment; there were 107,705 such addresses in the enclosed period. For the 1,306,960 senders of those payments, we checked whether any single payment met all three conditions:</p>
+<ul>
+<li>at the time of that payment, the sender had never received a payment before it;</li>
+<li>the payment was made within 3 minutes after a lockup release;</li>
+<li>after the payment, the sender's balance was below 2 Pi.</li>
+</ul>
+<p>65,355 payments met all three conditions. The confirmed addresses are the <b>recipients</b> of those payments: 2,153 of them. This is the list this report covers.</p>
+<p>The conditions capture a theft pattern: a victim whose passphrase was phished sends almost everything within minutes of a lockup release. Not matching the conditions does not mean an address is innocent. Details of the procedure, including two corrections to how the conditions were measured, are in the <a href="#appendix-method">appendix</a>.</p>
+
+<h2>Result 1: Connections inside the confirmed list</h2>
+<div class="tw"><table>
+<tr><th>Item</th><th>Count</th><th>(Reference) First judgment, 1,980 addresses</th></tr>
+<tr><td>Intra-list payments</td><td class="num">833,491 ops / 497,828,975 Pi</td><td class="num">759,723 ops / 454,951,489 Pi</td></tr>
+<tr><td>Largest group (connected by any payment)</td><td class="num">2,052</td><td class="num">1,878</td></tr>
+<tr><td>Other small groups</td><td class="num">3, 2, 2</td><td class="num">3, 2, 2</td></tr>
+<tr><td>Isolated (no intra-list counterparty)</td><td class="num">94</td><td class="num">95</td></tr>
+<tr><td>Largest strongly connected component (mutual-payment core)</td><td class="num">1,432</td><td class="num">1,302</td></tr>
+<tr><td>Send-only inside the list</td><td class="num">470</td><td class="num">429</td></tr>
+<tr><td>Receive-only inside the list</td><td class="num">25</td><td class="num">27</td></tr>
+</table></div>
+<p>Nearly 96% of the list connects into one group, and 1,432 addresses pay each other inside its core. Only 470 addresses act as entry points that send but never receive inside the list, and only 25 only receive.</p>
+
+<h2>Result 2: Outflows from the list</h2>
+<p>Payments from the confirmed list to outside addresses after 20 February 2025: 1,475 sending addresses (68.5% of the list), 1,214,215 operations, 466,001,378 Pi in total, to 109,959 external addresses.</p>
+<div class="tw"><table>
+<tr><th>Sender</th><th>Pi out</th><th>Ops</th><th>Destinations</th></tr>
+<tr><td><span class="addr">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span></td><td class="num">238,058,299</td><td class="num">2,883</td><td class="num">1,015</td></tr>
+<tr><td><span class="addr">GBC6NRTTQLRCABQHIR5J4R4YDJWFWRAO4ZRQIM2SVI5GSIZ2HZ42RINW</span></td><td class="num">106,441,657</td><td class="num">47,602</td><td class="num">6,797</td></tr>
+<tr><td><span class="addr">GDIRB4VB4PRARM27S6W3J5MCJGDUPRHCUQVBQZ4NADRGAQEUZNMRZNFL</span></td><td class="num">58,116,796</td><td class="num">11,242</td><td class="num">4,887</td></tr>
+<tr><td><span class="addr teladdr">GBU7PR3VSIWZGQZYOHP6KEUEBJPX4HYN6FMHDB5VQNJ2NNVCWU4D5ANE</span> (<span class="teladdr">teltlk</span>)</td><td class="num">17,600,000</td><td class="num">210</td><td class="num">1</td></tr>
+<tr><td><span class="addr">GDXZUYU7KF5QATLXEBIRZJ4NWKNYP3OFRNQVL2AUSQ2EUDD2XJA54JTQ</span></td><td class="num">2,626,928</td><td class="num">381</td><td class="num">41</td></tr>
+<tr><td><span class="addr">GCK6YAU4ZQQZ4VPROWH6RZN2ZBSRUBWX3DN2RPGWH7ETVOOYAFHATQJV</span></td><td class="num">2,183,861</td><td class="num">241</td><td class="num">3</td></tr>
+<tr><td><span class="addr">GDTV75TWI3OOZDPJKSRCWLGFIKIXVUAXWXAW4CZ4OHHROO5IHIITWZMV</span></td><td class="num">1,574,433</td><td class="num">551</td><td class="num">6</td></tr>
+<tr><td><span class="addr">GCXUXZSFDV3MMLASJZ2W4SBD7ZQ6DRO5JCV3TXAHE3DDVVD7QHRRMFC5</span></td><td class="num">1,553,707</td><td class="num">2,471</td><td class="num">387</td></tr>
+<tr><td><span class="addr">GBFMTJFT3QP2JUYRXVJUPTBC7J5FRQ7DGV47MICYOH2KKXCT3X4PU2J3</span></td><td class="num">1,544,847</td><td class="num">1,296</td><td class="num">363</td></tr>
+<tr><td><span class="addr">GC3ZUA5QA6E4GWF5SMK2IWRDTWPFAO3QFXUWT3MH6PQAN3PUJW22UHSA</span></td><td class="num">1,525,779</td><td class="num">2,051</td><td class="num">573</td></tr>
+</table></div>
+<p>The top three senders account for 86.4% of the total. The largest, <span class="addrf">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span>, is reported by third parties to be an OKX exchange wallet; the second is linked to Gate. <span class="teladdr">teltlk</span>, fourth, sent exactly 17,600,000 Pi in 210 operations to a single destination, <span class="addrf">GCQH27CCPDZQH2ACMTNAKXHT5S65VDGMRGZBHDNIHINP4EIKXKCRYSFK</span>. These outflows can include ordinary sales, so the total must not be read as illicit funds as-is.</p>
+<p class="small">Note: the outflow tally combines records for 1,980 addresses fetched on 6 November 2026 with the 173 new addresses fetched on 11 November 2026; the 173 include a few extra days of payments.</p>
+
+<h2>Result 3: Flows with the two hubs</h2>
+<h3><span class="teladdr">teltlk</span> <span class="addrf teladdr">GBU7PR3VSIWZGQZYOHP6KEUEBJPX4HYN6FMHDB5VQNJ2NNVCWU4D5ANE</span></h3>
+<p><span class="teladdr">teltlk</span> is itself on the confirmed list, belongs to both the largest group and the core, and acted almost purely as a receiver inside the list.</p>
+<div class="tw"><table>
+<tr><th>Direction</th><th>Ops</th><th>Pi</th><th>Counterparties</th></tr>
+<tr><td>List -&gt; <span class="teladdr">teltlk</span></td><td class="num">6,667</td><td class="num">8,147,461</td><td class="num">from 44</td></tr>
+<tr><td><span class="teladdr">teltlk</span> -&gt; List</td><td class="num">127</td><td class="num">4,363</td><td class="num">to 31</td></tr>
+</table></div>
+<h3><span class="pcmaddr">pi chain mall</span> <span class="addrf pcmaddr">GDGVILYX4RATPIO6XTBXNIBEUZXI3EBI36NJXKGO4DVJINYJ5X42WXHF</span></h3>
+<p><span class="pcmaddr">pi chain mall</span> is not on the confirmed list. Its own payments were judged (9,771 candidate payments), but only two met the 3-minute condition and both failed the balance condition.</p>
+<div class="tw"><table>
+<tr><th>Direction</th><th>Ops</th><th>Pi</th><th>Counterparties</th></tr>
+<tr><td>List -&gt; <span class="pcmaddr">pi chain mall</span></td><td class="num">1,738</td><td class="num">973,834</td><td class="num">from 125</td></tr>
+<tr><td><span class="pcmaddr">pi chain mall</span> -&gt; List</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+</table></div>
+<p>The flow from the list into <span class="pcmaddr">pi chain mall</span> is one-way. Note that <span class="pcmaddr">pi chain mall</span> sells goods for Pi and receives many payments from buyers, so part of this flow may be ordinary purchase payments.</p>
+
+<h2>Result 4: The same expansion as Project No.1</h2>
+<p>Project No.1 expanded its 278 confirmed seeds by collecting recipients of single payments over 999 Pi, twice, reaching 8,132 addresses (findsp2.py). Applying the same expansion to this project's 2,153 seeds:</p>
+<div class="tw"><table>
+<tr><th></th><th>Project No.1</th><th>Project No.2 (this report)</th></tr>
+<tr><td>Seeds (confirmed by the victim conditions)</td><td class="num">278</td><td class="num">2,153</td></tr>
+<tr><td>Expanded total</td><td class="num">8,132</td><td class="num">31,858 (ring 1 +10,984, ring 2 +18,721)</td></tr>
+<tr><td>Largest group</td><td class="num">8,126</td><td class="num">31,854</td></tr>
+<tr><td>Largest strongly connected component</td><td class="num">6,365</td><td class="num">24,060</td></tr>
+<tr><td>Receive-only</td><td class="num">1,503</td><td class="num">6,214</td></tr>
+<tr><td>Send-only</td><td class="num">41</td><td class="num">392 (all seeds)</td></tr>
+</table></div>
+<p>The 31,858 expanded addresses include 8,048 (99.0%) of Project No.1's 8,132; the remaining 84 were not reached by this expansion. Payments inside the expanded set total 2,678,197 operations and about 2,395,060,983 Pi, with almost all addresses connected into one group. <span class="pcmaddr">pi chain mall</span> appears in ring 1 and belongs to both the largest group and the core; <span class="teladdr">teltlk</span> is one of the seeds.</p>
+<p>The evidence for an expanded address is weaker than for a seed: it received a large one-shot payment from a seed or from the expansion, and was not individually confirmed by the victim conditions. Even so, covering 99.0% of the No.1 list and connecting almost entirely into one group describes the character of this expansion as a whole.</p>
+
+<h2>Limitations</h2>
+<ul>
+<li>The scope is the enclosed period only. Thefts that happened just after the period ended on 20 February 2025, even days later, are structurally outside this judgment.</li>
+<li>Confirmation is a lower bound; not matching the conditions is not proof of innocence. Of 2,524,130 candidate payments, 12 (from 2 victims) could not be retrieved and were never judged.</li>
+<li>Outflows in Result 2 can include ordinary sales. Exchange labels rest on third-party reports.</li>
+<li>The expansion in Result 4 rests on weaker evidence than the seeds (see Result 4).</li>
+</ul>
+
+<h2 id="appendix-method">Appendix: Method</h2>
+<h3>Data</h3>
+<p>From the Pi mainnet public records (Horizon API), we collected all 11,413,664 enclosed-period payments, plus each account's lockup release times and balance history. Release times are reconstructed from claimable-balance records.</p>
+<h3>Judgment flow</h3>
+<p>The entry set (addresses that sent 1,000 Pi or more at once) had 107,705 addresses. The first judgment measured the first condition over the whole period (any incoming at all) and confirmed 1,980 addresses. Two measurement corrections followed: the first condition became "no incoming before that payment", and the release in the second condition became "within 3 minutes of either kind of release (the user-chosen lockup, or the two-week migration hold)". The re-run confirmed 2,153 addresses (+173, none dropped), which is the formal list. The re-run judged 2,524,118 of 2,524,130 candidate payments from 1,306,960 victim candidates.</p>
+<h3>Tallying</h3>
+<p>Connections in Results 1 and 4 count only payments inside the respective set (repeated payments to the same counterparty count as one pair). Result 2 follows each account's public payment history after 20 February 2025 and counts only payments leaving the list. Result 3 counts hub flows over all enclosed-period payments.</p>
+
+<h2>Appendix: Relaxation tests</h2>
+<h3>Test 1: disregarding small incoming payments</h3>
+<p>An interviewed victim had been excluded by a 1 Pi incoming payment. We re-judged with the rule "an incoming payment of 10 Pi or less counts as no incoming". The entry widened greatly (victim candidates +140,887, candidate payments +395,173), but confirmations rose by only 74, to 2,227. Only 96.5% of the candidate payments could be judged, so 2,227 is a lower bound; even so the increase was small, and the relaxed list was not adopted. The binding condition is the 3 minutes after release, not the incoming payment.</p>
+<h3>Test 2: widening the post-release window to 3 days</h3>
+<p>Widening "within 3 minutes of release" to "within 3 days" raised confirmations to 11,517. The growth sits in the 1-hour-to-1-day band (4,734), not just past 3 minutes (2,919 in 3 minutes to 1 hour; 1,711 in 1 to 3 days), i.e. the wider window mostly captures ordinary post-release spending. This test only measures how the 3-minute condition behaves; it was not adopted.</p>
+
+
+<h3>How much of the Project No.1 list was confirmed, by layer</h3>
+<p>Share of the 8,132 Project No.1 addresses that this project's judgment confirmed, split by how the No.1 list was built (seeds and the two expansion rings). The share is higher near the seeds and lower further out. These are shares confirmed, not proof that the rest are innocent: addresses that never entered the judgment were never judged at all.</p>
+<div class="tw"><table>
+<tr><th>Layer</th><th>Addresses</th><th>Confirmed</th><th>Share</th></tr>
+<tr><td>Whole Project No.1 list</td><td class="num">8,132</td><td class="num">580</td><td class="num">7.1%</td></tr>
+<tr><td>Seeds (278)</td><td class="num">278</td><td class="num">183</td><td class="num">65.8%</td></tr>
+<tr><td>Expansion ring 1</td><td class="num">433</td><td class="num">183</td><td class="num">42.3%</td></tr>
+<tr><td>Expansion ring 2</td><td class="num">7,421</td><td class="num">214</td><td class="num">2.9%</td></tr>
+</table></div>
+<p class="small">Ring boundaries follow a reproduction of the expansion on this project's data; the original per-ring files from 2024 do not survive.</p>
+
+<h2>Files</h2>
+<ul>
+<li><a href="enclosed_suspects_2153.txt">Confirmed list (2,153)</a></li>
+<li><a href="expansion_31858.txt">Expanded list (31,858)</a></li>
+<li><a href="https://tysseo7-meru.github.io/moco_pi-thief-trace-report/pi_thief_trace_report_en.html">Project No.1 report</a></li>
+<li><a href="https://tysseo7-meru.github.io/moco-project-index/">All reports</a></li>
+</ul>
+<p class="small">Published 11 November 2026. The judgment extended to the end of 2025 is in progress; a follow-up will be published when it is ready.</p>
+</main>
+</body>
+</html>
