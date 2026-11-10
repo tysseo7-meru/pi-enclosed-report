@@ -73,18 +73,18 @@ img { max-width: 100%; }
 <li>after the payment, the sender's balance was below 2 Pi.</li>
 </ul>
 <p>65,355 payments met all three conditions. The confirmed addresses are the <b>recipients</b> of those payments: 2,153 of them. This is the list this report covers.</p>
-<p>The conditions capture a theft pattern: a victim whose passphrase was phished sends almost everything within minutes of a lockup release. Not matching the conditions does not mean an address is innocent. Details of the procedure, including two corrections to how the conditions were measured, are in the <a href="#appendix-method">appendix</a>.</p>
+<p>The conditions capture a theft pattern: a victim whose passphrase was phished sends almost everything within minutes of a lockup release. Not matching the conditions does not mean an address is innocent. Details of the procedure are in the <a href="#appendix-method">appendix</a>.</p>
 
 <h2>Result 1: Connections inside the confirmed list</h2>
 <div class="tw"><table>
-<tr><th>Item</th><th>Count</th><th>(Reference) First judgment, 1,980 addresses</th></tr>
-<tr><td>Intra-list payments</td><td class="num">833,491 ops / 497,828,975 Pi</td><td class="num">759,723 ops / 454,951,489 Pi</td></tr>
-<tr><td>Largest group (connected by any payment)</td><td class="num">2,052</td><td class="num">1,878</td></tr>
-<tr><td>Other small groups</td><td class="num">3, 2, 2</td><td class="num">3, 2, 2</td></tr>
-<tr><td>Isolated (no intra-list counterparty)</td><td class="num">94</td><td class="num">95</td></tr>
-<tr><td>Largest strongly connected component (mutual-payment core)</td><td class="num">1,432</td><td class="num">1,302</td></tr>
-<tr><td>Send-only inside the list</td><td class="num">470</td><td class="num">429</td></tr>
-<tr><td>Receive-only inside the list</td><td class="num">25</td><td class="num">27</td></tr>
+<tr><th>Item</th><th>Count</th></tr>
+<tr><td>Intra-list payments</td><td class="num">833,491 ops / 497,828,975 Pi</td></tr>
+<tr><td>Largest group (connected by any payment)</td><td class="num">2,052</td></tr>
+<tr><td>Other small groups</td><td class="num">3, 2, 2</td></tr>
+<tr><td>Isolated (no intra-list counterparty)</td><td class="num">94</td></tr>
+<tr><td>Largest strongly connected component (mutual-payment core)</td><td class="num">1,432</td></tr>
+<tr><td>Send-only inside the list</td><td class="num">470</td></tr>
+<tr><td>Receive-only inside the list</td><td class="num">25</td></tr>
 </table></div>
 <p>Nearly 96% of the list connects into one group, and 1,432 addresses pay each other inside its core. Only 470 addresses act as entry points that send but never receive inside the list, and only 25 only receive.</p>
 
@@ -104,7 +104,7 @@ img { max-width: 100%; }
 <tr><td><span class="addr">GC3ZUA5QA6E4GWF5SMK2IWRDTWPFAO3QFXUWT3MH6PQAN3PUJW22UHSA</span></td><td class="num">1,525,779</td><td class="num">2,051</td><td class="num">573</td></tr>
 </table></div>
 <p>The top three senders account for 86.4% of the total. The largest, <span class="addrf">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span>, is reported by third parties to be an OKX exchange wallet; the second is linked to Gate. <span class="teladdr">teltlk</span>, fourth, sent exactly 17,600,000 Pi in 210 operations to a single destination, <span class="addrf">GCQH27CCPDZQH2ACMTNAKXHT5S65VDGMRGZBHDNIHINP4EIKXKCRYSFK</span>. These outflows can include ordinary sales, so the total must not be read as illicit funds as-is.</p>
-<p class="small">Note: the outflow tally combines records for 1,980 addresses fetched on 6 November 2026 with the 173 new addresses fetched on 11 November 2026; the 173 include a few extra days of payments.</p>
+<p class="small">Note: the outflow records were fetched on different days for different addresses, so a few addresses include a few extra days of payments.</p>
 
 <h2>Result 3: Flows with the two hubs</h2>
 <h3><span class="teladdr">teltlk</span> <span class="addrf teladdr">GBU7PR3VSIWZGQZYOHP6KEUEBJPX4HYN6FMHDB5VQNJ2NNVCWU4D5ANE</span></h3>
@@ -146,7 +146,7 @@ img { max-width: 100%; }
 </ul>
 
 <h2 id="appendix-method">Appendix: Method</h2>
-<p>Data: the Pi mainnet public records (Horizon API) — all 11,413,664 enclosed-period payments, plus lockup release times and balance histories. For payments sent to the 107,705 addresses that once sent 1,000 Pi or more at once, we counted payments where the sender had no incoming before that payment, sent within 3 minutes of either kind of lockup release, and was left with under 2 Pi; the recipients of those payments are the confirmed list. Measured over the whole period instead, the first count gave 1,980 addresses; measured this way it gives 2,153. Connections and outflows count payments inside the list and payments leaving it after 20 February 2025.</p>
+<p>Data: the Pi mainnet public records (Horizon API) — all 11,413,664 enclosed-period payments, plus lockup release times and balance histories. For payments sent to the 107,705 addresses that once sent 1,000 Pi or more at once, we counted payments where the sender had no incoming before that payment, sent within 3 minutes of either kind of lockup release, and was left with under 2 Pi; the recipients of those payments are the confirmed list. Connections and outflows count payments inside the list and payments leaving it after 20 February 2025.</p>
 
 
 <h3>How much of the Project No.1 list was confirmed, by layer</h3>
