@@ -46,6 +46,10 @@ img { max-width: 100%; }
 @media (max-width: 600px) {
   table { min-width: 0; table-layout: fixed; }
   th, td { overflow-wrap: anywhere; }
+  table.exit th:nth-child(1), table.exit td:nth-child(1) { width: 26%; }
+  table.exit th:nth-child(2), table.exit td:nth-child(2) { width: 31%; }
+  table.exit th:nth-child(3), table.exit td:nth-child(3) { width: 19%; }
+  table.exit th:nth-child(4), table.exit td:nth-child(4) { width: 24%; }
 }
 </style>
 </head>
@@ -96,7 +100,7 @@ img { max-width: 100%; }
 
 <h2>結果2：リストの外への流出</h2>
 <p>エンクローズド期間の終了（2025年2月20日）以降に、確定リストからリストの外へ出た送金を数えました。流出させたアドレスは 1,475 件（リストの68.5%）、送金は 1,214,215 回、合計 466,001,378 Pi、宛先は 109,959 件でした。</p>
-<div class="tw"><table>
+<div class="tw"><table class="exit">
 <tr><th>送り元</th><th>流出 Pi</th><th>回数</th><th>宛先の数</th></tr>
 <tr><td><span class="addr">GALYJFJ5SVD45FBWN2GT4IW67SEZ3IBOFSBSPUFCWV427NBNLG3PXEQU</span></td><td class="num">238,058,299</td><td class="num">2,883</td><td class="num">1,015</td></tr>
 <tr><td><span class="addr">GBC6NRTTQLRCABQHIR5J4R4YDJWFWRAO4ZRQIM2SVI5GSIZ2HZ42RINW</span></td><td class="num">106,441,657</td><td class="num">47,602</td><td class="num">6,797</td></tr>
