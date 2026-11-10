@@ -146,30 +146,14 @@ img { max-width: 100%; }
 </ul>
 
 <h2 id="appendix-method">Appendix: Method</h2>
-<h3>Data</h3>
-<p>From the Pi mainnet public records (Horizon API), we collected all 11,413,664 enclosed-period payments, plus each account's lockup release times and balance history. Release times are reconstructed from claimable-balance records.</p>
-<h3>Judgment flow</h3>
-<p>The entry set (addresses that sent 1,000 Pi or more at once) had 107,705 addresses. The first judgment measured the first condition over the whole period (any incoming at all) and confirmed 1,980 addresses. Two measurement corrections followed: the first condition became "no incoming before that payment", and the release in the second condition became "within 3 minutes of either kind of release (the user-chosen lockup, or the two-week migration hold)". The re-run confirmed 2,153 addresses (+173, none dropped), which is the formal list. The re-run judged 2,524,118 of 2,524,130 candidate payments from 1,306,960 victim candidates.</p>
-<h3>Tallying</h3>
-<p>Connections in Results 1 and 4 count only payments inside the respective set (repeated payments to the same counterparty count as one pair). Result 2 follows each account's public payment history after 20 February 2025 and counts only payments leaving the list. Result 3 counts hub flows over all enclosed-period payments.</p>
+<p>Data: the Pi mainnet public records (Horizon API) — all 11,413,664 enclosed-period payments, plus lockup release times and balance histories. For payments sent to the 107,705 addresses that once sent 1,000 Pi or more at once, we counted payments where the sender had no incoming before that payment, sent within 3 minutes of either kind of lockup release, and was left with under 2 Pi; the recipients of those payments are the confirmed list. Measured over the whole period instead, the first count gave 1,980 addresses; measured this way it gives 2,153. Connections and outflows count payments inside the list and payments leaving it after 20 February 2025.</p>
 
 <h2>Appendix: Relaxation tests</h2>
-<h3>Test 1: disregarding small incoming payments</h3>
-<p>An interviewed victim had been excluded by a 1 Pi incoming payment. We re-judged with the rule "an incoming payment of 10 Pi or less counts as no incoming". The entry widened greatly (victim candidates +140,887, candidate payments +395,173), but confirmations rose by only 74, to 2,227. Only 96.5% of the candidate payments could be judged, so 2,227 is a lower bound; even so the increase was small, and the relaxed list was not adopted. The binding condition is the 3 minutes after release, not the incoming payment.</p>
-<h3>Test 2: widening the post-release window to 3 days</h3>
-<p>Widening "within 3 minutes of release" to "within 3 days" raised confirmations to 11,517. The growth sits in the 1-hour-to-1-day band (4,734), not just past 3 minutes (2,919 in 3 minutes to 1 hour; 1,711 in 1 to 3 days), i.e. the wider window mostly captures ordinary post-release spending. This test only measures how the 3-minute condition behaves; it was not adopted.</p>
+<p>Test 1 (an incoming payment of 10 Pi or less counts as none): the entry widened greatly (victim candidates +140,887), but confirmations rose by only 74, to 2,227, so it was not adopted. Test 2 (the post-release window widened to 3 days): confirmations rose to 11,517, but the wider window mostly captures ordinary spending, so it was not adopted either.</p>
 
 
 <h3>How much of the Project No.1 list was confirmed, by layer</h3>
-<p>Share of the 8,132 Project No.1 addresses that this project's judgment confirmed, split by how the No.1 list was built (seeds and the two expansion rings). The share is higher near the seeds and lower further out. These are shares confirmed, not proof that the rest are innocent: addresses that never entered the judgment were never judged at all.</p>
-<div class="tw"><table>
-<tr><th>Layer</th><th>Addresses</th><th>Confirmed</th><th>Share</th></tr>
-<tr><td>Whole Project No.1 list</td><td class="num">8,132</td><td class="num">580</td><td class="num">7.1%</td></tr>
-<tr><td>Seeds (278)</td><td class="num">278</td><td class="num">183</td><td class="num">65.8%</td></tr>
-<tr><td>Expansion ring 1</td><td class="num">433</td><td class="num">183</td><td class="num">42.3%</td></tr>
-<tr><td>Expansion ring 2</td><td class="num">7,421</td><td class="num">214</td><td class="num">2.9%</td></tr>
-</table></div>
-<p class="small">Ring boundaries follow a reproduction of the expansion on this project's data; the original per-ring files from 2024 do not survive.</p>
+<p>Of Project No.1's 8,132 addresses, the share confirmed by this judgment was 7.1% overall: 65.8% for the seeds (278), 42.3% for expansion ring 1, and 2.9% for ring 2. Not being confirmed does not mean innocent: addresses that never entered the judgment were never judged.</p>
 
 <h2>Files</h2>
 <ul>
